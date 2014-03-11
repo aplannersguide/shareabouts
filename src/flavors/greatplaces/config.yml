@@ -39,10 +39,10 @@ map:
 # The keys show up in the dropdown list when you are adding a new place
 # The values map the place type to map icons (defined below).
 place_types:
-  greatplace:
-    label: _(Great Place)
+  landmark:
+    label: _(Landmark)
     rules:
-      - condition: '"{{location_type}}" === "greatplace"'
+      - condition: '"{{location_type}}" === "landmark"'
         # Display landmarks as icons
 
         icon:
@@ -55,6 +55,94 @@ place_types:
           iconSize: [25, 41]
           shadowSize: [41, 41]
           iconAnchor: [12, 41]
+
+        # style:
+        #   color: '#0d85e9'
+        #   radius: 8
+        #   weight: 1
+        #   opacity: 0.9
+        #   fillOpacity: 0.4
+        # focus_style:
+        #   color: '#0d85e9'
+        #   radius: 16
+        #   weight: 1
+        #   opacity: 0.9
+        #   fillOpacity: 0.4
+
+  park:
+    label: _(Park)
+    rules:
+      - condition: '"{{location_type}}" === "park"'
+        # Show parks that are points as icons...
+
+        icon:
+          iconUrl: /static/css/images/markers/dot-4bbd45.png
+          iconSize: [17, 18]
+          iconAnchor: [9, 9]
+        focus_icon:
+          iconUrl: /static/css/images/markers/marker-4bbd45.png
+          shadowUrl: /static/css/images/marker-shadow.png
+          iconSize: [25, 41]
+          shadowSize: [41, 41]
+          iconAnchor: [12, 41]
+
+        # ...and parks that are polygons as shapes.
+
+        style:
+          color: '#4bbd45'
+          radius: 8
+          weight: 1
+          opacity: 0.9
+          fillOpacity: 0.4
+        focus_style:
+          color: '#4bbd45'
+          radius: 16
+          weight: 1
+          opacity: 0.9
+          fillOpacity: 0.4
+
+  school:
+    label: _(School)
+    rules:
+      - condition: '"{{location_type}}" === "school" && {{submission_sets.comments.length}} > 0'
+        # Display schools as circles
+
+        # icon:
+        #   iconUrl: /static/css/images/markers/dot-f95016.png
+        #   iconSize: [17, 18]
+        #   iconAnchor: [9, 9]
+        # focus_icon:
+        #   iconUrl: /static/css/images/markers/marker-f95016.png
+        #   shadowUrl: /static/css/images/marker-shadow.png
+        #   iconSize: [25, 41]
+        #   shadowSize: [41, 41]
+        #   iconAnchor: [12, 41]
+
+        style:
+          color: '#f95016'
+          radius: 8
+          weight: 4
+          opacity: 0.9
+          fillOpacity: 0.4
+        focus_style:
+          color: '#f95016'
+          radius: 16
+          weight: 4
+          opacity: 0.9
+          fillOpacity: 0.4
+      - condition: '"{{location_type}}" === "school"'
+        style:
+          color: '#f95016'
+          radius: 8
+          weight: 1
+          opacity: 0.9
+          fillOpacity: 0.4
+        focus_style:
+          color: '#f95016'
+          radius: 16
+          weight: 1
+          opacity: 0.9
+          fillOpacity: 0.4
 
 
 activity:
@@ -103,11 +191,19 @@ place:
           value: 30
         - key: required
     - prompt: _(Location Type)
-      type: hidden
+      type: select
+      options:
+        - label: _(Choose One)
+          value: ''
+        - label: _(Landmark)
+          value: landmark
+        - label: _(Park)
+          value: park
+        - label: _(School)
+          value: school
       name: location_type
       attrs:
-        - key: value
-        - value: greatplace
+        - key: required
     - prompt: _(Description)
       type: textarea
       name: description
